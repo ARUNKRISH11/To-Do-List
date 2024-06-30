@@ -15,17 +15,29 @@ function App() {
       <div className="input">
         <input value={toDo} onChange={(e) => setToDo(e.target.value)} type="text" placeholder="🖊️ Add item..." />
         {/* e.target.value: for getting typing value */}
-        <i onClick={() => setToDos([...toDos, toDo])} className="fas fa-plus"></i>
+        <i onClick={() => setToDos([...toDos, {id:Date.now(), text:toDo, status:false}])} className="fas fa-plus"></i>
         {/* Add button */}
       </div>
       <div className="todos">
 
-        {toDos.map((value) => {
+        {toDos.map((object) => {
           return (
             <div className="todo">
               <div className="left">
-                <input type="checkbox" name="" id="" />
-                <p>{value}</p>
+                <input onChange={(e)=>{
+                  console.log(object); //object may object, contain text and status 
+                  // Change todo status
+                  setToDo(toDos.filter(eachObjects=>{
+                    // For filter, return the needed objects
+                    if(eachObjects.id===object.id){
+                      eachObjects.status=e.target.checked;
+                      console.log(eachObjects.status); //may be boolean
+                    }
+                    return eachObjects
+                  }))
+                }} value={object.status} type="checkbox" name="" id="" />
+                {/* accessing text from Todos */}
+                <p>{object.text}</p>
                 {/* Display Todo */}
               </div>
               <div className="right">
@@ -34,8 +46,14 @@ function App() {
               </div>
             </div>
           )
-        })
-        }
+        })}
+        {toDos.map((object)=>{
+          if(object.status){
+            return (<h1>{object.text}</h1>)
+          }
+          return null
+        })}
+        
       </div>
     </div>
   );
