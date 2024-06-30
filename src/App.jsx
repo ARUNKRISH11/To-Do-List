@@ -26,9 +26,11 @@ function App() {
               <div className="left">
                 <input type="checkbox" name="" id="" />
                 <p>{value}</p>
+                {/* Display Todo */}
               </div>
               <div className="right">
                 <i className="fas fa-times"></i>
+                {/* Remove button */}
               </div>
             </div>
           )
